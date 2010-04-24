@@ -42,7 +42,7 @@ class Membre
     end
   end
   
-  # Cas où il y  a plusieurs solutions au sudoku (doublons correspondants sur deux lignes différentes)
+  # Cas oï¿½ il y  a plusieurs solutions au sudoku (doublons correspondants sur deux lignes diffï¿½rentes)
   def self.symetric_doublon? elem
     same_on_line = false
     same_on_column = false
@@ -52,9 +52,8 @@ class Membre
   end
   
   def only_two_elements_can_contain? number
-    p = []
-    self.each_element { |e| p = p+[e] if number.can_be_in?(e)}
-    p if  p.length==2
+    p = self.each_element.map{|e| e if number.can_be_in?(e)}
+    p.length == 2 ? p : false
   end
   
   def can_contain? number

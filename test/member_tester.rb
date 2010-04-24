@@ -47,12 +47,8 @@ class MemberTester < Test::Unit::TestCase
                           2,9,6,5,8,7,4,3,1])
     
   end
+
   
-  def create_doublon elems,doublon
-    elems[0].doublon = elems[1].doublon = doublon
-    elems[0].doublon_link = elems[1]  
-    elems[1].doublon_link = elems[0]  
-  end
   
   def xtest_contain?
     assert @sudoku.line(5).contain?(@sudoku.element(45))  
@@ -82,21 +78,21 @@ class MemberTester < Test::Unit::TestCase
     assert !@sudoku.block(6).contains_doublon_with?(9)
   end
   
-  def xtest_only_be_in_two_line_elements
+  def test_number_can_only_be_in_two_line_elements
     assert !2.can_only_be_in_two_elements?(@sudoku.line(5))
     assert_equal [@sudoku.element(5),@sudoku.element(6)],2.can_only_be_in_two_elements?(@sudoku.line(1))
     assert_equal [@sudoku.element(55),@sudoku.element(60)],8.can_only_be_in_two_elements?(@sudoku.line(7))
     assert_equal [@sudoku.element(55),@sudoku.element(60)],1.can_only_be_in_two_elements?(@sudoku.line(7))
   end
   
-  def xtest_only_be_in_two_column_elements
+  def test_only_be_in_two_column_elements
     assert_equal [@sudoku.element(45),@sudoku.element(72)], 3.can_only_be_in_two_elements?(@sudoku.column(9))
     assert !3.can_only_be_in_two_elements?(@sudoku.column(8))
     create_doublon([@sudoku.element(45), @sudoku.element(80)],[8,9])
     assert_equal [@sudoku.element(35),@sudoku.element(53)],3.can_only_be_in_two_elements?(@sudoku.column(8))
   end
   
-  def xtest_only_be_in_two_block_elements
+  def test_only_be_in_two_block_elements
     assert_equal [@sudoku.element(8),@sudoku.element(27)],6.can_only_be_in_two_elements?(@sudoku.block(3))
     assert !8.can_only_be_in_two_elements?(@sudoku.block(3))
     @sudoku.element(45).value = 8;
@@ -169,11 +165,18 @@ class MemberTester < Test::Unit::TestCase
     assert_equal 3,@sudoku1.element(47).value
   end
   
-  #Test du cas où le sudoku a plusieurs solutions , doublons correspondants sur deux lignes différentes
+  #Test du cas oï¿½ le sudoku a plusieurs solutions , doublons correspondants sur deux lignes diffï¿½rentes
   def xtest_multiple_choice
     create_doublon [@sudoku2.element(29),@sudoku2.element(33)],[3,8]
     create_doublon [@sudoku2.element(47),@sudoku2.element(51)],[3,8]
     assert Membre.symetric_doublon?(@sudoku2.element(29))
+  end
+
+  private
+  def create_doublon elems,doublon
+    elems[0].doublon = elems[1].doublon = doublon
+    elems[0].doublon_link = elems[1]
+    elems[1].doublon_link = elems[0]
   end
   
 end

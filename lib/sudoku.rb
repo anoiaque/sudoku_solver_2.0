@@ -10,8 +10,8 @@ class Sudoku
   
   def solve 
     change = false
-     #generate_doublons 
-      #self.each_line {|l| l.solve_doublons}
+     #generate_doublons
+     # self.each_line {|l| l.solve_doublons}
    
     (1..9).each do |number|
      (1..81).each do |c|
